@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Tuomas Eerola - 2019
-
 echo '==== This script will enable Graphical User Interface on your Ubuntu Server ===='
 echo '==== and creates a user account that you can use with Remote Desktop Connections ===='
 echo '==== Username: ' $1
@@ -28,3 +26,11 @@ touch ~/.Xresources
 sudo adduser  --disabled-password --gecos "GUI User" $1
 echo "$1:$2" | sudo chpasswd
 sudo /usr/sbin/usermod -aG sudo $1
+
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+sudo dpkg --install chrome-remote-desktop_current_amd64.deb
+sudo apt install --assume-yes --fix-broken
+
+sudo usermod -a -G chrome-remote-desktop $1
+sudo reboot
